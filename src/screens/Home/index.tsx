@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -7,12 +7,33 @@ import {
   Alert,
   FlatList,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./styles";
 import Participant from "../../components/Participant";
 
 export default function Home() {
   const [participants, setParticipants] = useState<string[]>([]);
   const [participantName, setParticipantName] = useState("");
+
+  const STORAGE_KEY = "@participants";
+
+  //lendo os participantes salvos na memoria
+  useEffect(() => {
+    async function loadParticipants() {
+      const storedParticipants = await AsyncStorage.getItem(STORAGE_KEY);
+      if (storedParticipants) {
+        setParticipants(JSON.parse(storedParticipants));
+      }
+    }
+    loadParticipants();
+  }, []);
+  //salvando participantes na memoria
+  useEffect(() => {
+    async function saveParticipants() {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(participants));
+    }
+    saveParticipants();
+  }, [participants]);
 
   function handleParticipantAdd() {
     if (participants.includes(participantName)) {
