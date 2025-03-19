@@ -20,7 +20,7 @@ Este é um aplicativo para gerenciar a lista de participantes de um evento. A ap
 1. Clone o repositório:
 
 ```bash
-   git clone https://github.com/seu-usuario/gerenciador-participantes.git
+   git clone https://github.com/Natanael135/app-react-native
 ```
 
 2. Navegue até a pasta do projeto:
